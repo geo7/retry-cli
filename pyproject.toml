@@ -1,6 +1,6 @@
 [project]
 name = "retry-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "A simple CLI utility to run shell commands with automatic retries on failure."
 readme = "README.md"
 authors = [

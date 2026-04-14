@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# https://git-scm.com/docs/githooks#_pre_commit
+
+# Get the current branch name
+current_branch=$(git branch --show-current)
+
+# this could be true if we're mid rebase or something
+if [ -z "$current_branch" ]; then
+  exit 0
+fi
+
+# check we're not on a protected branch.
+case "$current_branch" in
+main | master | dev | staging)
+  echo "Error: Cannot commit directly to $current_branch branch. Create a feature branch."
+  exit 1
+  ;;
+esac
+
+# If not on main or dev, allow the commit to proceed
+exit 0

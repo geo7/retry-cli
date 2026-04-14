@@ -1,0 +1,41 @@
+name: CI
+on: [push]
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+      - name: Set up python
+        run: uv python install 3.14
+      - name: Install dependencies
+        run: uv sync --all-extras
+      - name: Run lint checks
+        run: bash ./scripts/lint.sh
+
+  test:
+    needs: linting
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ "ubuntu-latest" ]
+        python-version: [ "3.14" ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+      - name: Set up python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: uv sync --all-extras
+      - name: Pytest ${{ matrix.python-version }}
+        run: bash ./scripts/test.sh

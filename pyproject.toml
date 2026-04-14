@@ -1,0 +1,83 @@
+[project]
+name = "retry-cli"
+version = "0.1.0"
+description = "A simple CLI utility to run shell commands with automatic retries on failure."
+readme = "README.md"
+authors = [
+    { name = "geo7", email = "georgelenton@gmail.com" }
+]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["cli", "retry", "automation", "tooling", "development"]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/geo7/retry-cli"
+Issues = "https://github.com/geo7/retry-cli/issues"
+
+[project.scripts]
+retry = "retry_cli.__main__:entry_point"
+
+[dependency-groups]
+dev = [
+    "deptry>=0.24.0",
+    "pdbr[ipython]>=0.9.7",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.10",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.3,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN003",  # Missing type annotation for `**kwargs`
+    "COM812",  # Trailing comma missing (conflicts with the formatter)
+    "D101",    # Missing docstring in public class
+    "D100",    # Missing docstring in public module
+    "D104",    # Missing docstring in public package
+    "D203",    # 1 blank line required before class docstring (conflicts with D211)
+    "D213",    # Multi-line docstring summary at second line (conflicts with D212)
+    "D401",    # First line of docstring should be in imperative mood: "Method to handle these args."
+    "DTZ005",  # `datetime.datetime.now()` called without a `tz` argument
+    "FIX002",  # Line contains TODO, consider resolving the issue
+    "T201",    # `print` found
+    "TD002",   # Missing author in TODO; try: `# TODO(<author_name>): ...` or `# TODO @<author_name>: ...`
+    "TD003",   # Missing issue link for this TODO
+]
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"**/tests/*" = [
+    "ANN001",  # Missing type annotation for function argument `monkeypatch`
+    "ANN003",  # Missing type annotation for `**kwargs`
+    "ANN202",  # Missing return type annotation for private function
+    "ANN201",  # Missing return type annotation for public function `test_rm_rf_happy_path`
+    "ARG001",  # Unused function argument: `kwargs`
+    "ARG005",  # Unused lambda argument: `kwargs`
+    "D103",    # Missing docstring in public function
+    "D104",    # Missing docstring in public package
+    "FBT002",  # Boolean default positional argument in function definition
+    "PLR2004", # Magic value used in comparison, consider replacing `2` with a constant variable
+    "S101",    # Use of `assert` detected
+    "S105",    # Possible hardcoded password assigned to: "POSTGRES_PREFECT_PASSWORD"
+    "S106",    # Possible hardcoded password assigned to argument: "secret_id"
+    "S603",    # `subprocess` call: check for execution of untrusted input
+    "S607",    # Starting a process with a partial executable path
+    "TRY002",  # Create your own exception
+]
+
+[tool.ruff.lint.isort]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+case-sensitive = true
+combine-as-imports = true

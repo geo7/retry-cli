@@ -10,6 +10,15 @@ license = "MIT"
 license-files = ["LICENSE"]
 keywords = ["cli", "retry", "automation", "tooling", "development"]
 requires-python = ">=3.14"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+]
 dependencies = []
 
 [project.urls]

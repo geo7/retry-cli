@@ -3,8 +3,8 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![PyPI Latest Release](https://img.shields.io/pypi/v/retry-cli.svg)](https://pypi.org/project/retry-cli/)
 [![License](https://img.shields.io/pypi/l/retry-cli.svg)](https://github.com/geo7/retry-cli/blob/main/LICENSE)
-[![Python Versions](https://img.shields.io/pypi/pyversions/retry-cli.svg)](https://pypi.python.org/pypi/retry-cli)
-[![CI Status](https://github.com/geo7/retry-cli/workflows/CI/badge.svg)](https://github.com/geo7/retry-cli/actions)
+[![Python Versions](https://img.shields.io/pypi/pyversions/retry-cli.svg)](https://pypi.org/project/retry-cli/)
+[![CI Status](https://github.com/geo7/retry-cli/actions/workflows/test.yml/badge.svg)](https://github.com/geo7/retry-cli/actions)
 
 A utility to run a shell command a set number of times with automatic retries on failure.
 

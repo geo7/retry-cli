@@ -109,6 +109,9 @@ if parsed_version != new_version:
     )
 PY
 
+echo "Syncing lockfile..."
+uv sync --all-extras
+
 echo "Running verification steps for ${TAG}..."
 CI=true bash ./scripts/lint.sh
 CI=true bash ./scripts/test.sh
@@ -117,8 +120,8 @@ CI=true bash ./scripts/test.sh
 uv build
 
 echo "Committing version bump..."
-git add pyproject.toml
-git commit -m "chore: bump version to ${TAG}"
+git add pyproject.toml uv.lock
+git commit --no-verify -m "chore: bump version to ${TAG}"
 
 echo "Creating annotated tag ${TAG}..."
 git tag -a "${TAG}" -m "Release ${TAG}"

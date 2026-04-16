@@ -1,7 +1,16 @@
-.PHONY: help test pre-commit lint format release blast _blast add-help-to-readme init git-hooks clean
+.PHONY: help test pre-commit lint format release dependabot-prs blast _blast add-help-to-readme init git-hooks clean
 
-help: ## Show this help
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
+.DEFAULT_GOAL := menu
+
+help: ## Show help
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
+
+menu:
+	@target=$$(awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort --reverse | fzf --ansi | awk '{print $$1}'); \
+	if [ -n "$$target" ]; then \
+		echo "Running make $$target..."; \
+		$(MAKE) $$target; \
+	fi
 
 clean: ## Remove caches and compiled files
 	@find . -path './.venv' -prune -o -type f -name "*.pyc" -delete
@@ -29,6 +38,9 @@ format: ## Run formatting
 release: ## Create a release commit and tag (Usage: make release VERSION=X.Y.Z)
 	bash ./scripts/release.sh $(VERSION)
 
+dependabot-prs: ## List open Dependabot PRs targeting main
+	bash ./scripts/dependabot_prs.sh
+
 add-help-to-readme: ## Update README.md with CLI help text
 	NO_COLOR=1 PYTHON_COLORS=0 uv run python scripts/add_help_to_readme.py
 
@@ -44,4 +56,3 @@ blast: ## Run linters and pre-commit (safely stashing untracked files)
 		trap 'echo "Restoring untracked files..."; git stash pop --quiet' EXIT INT TERM; \
 	fi; \
 	$(MAKE) _blast
-

@@ -21,7 +21,8 @@ uvx --from retry-cli retry --command "pre-commit run --all-files"
 [comment]: # (CLI help split)
 
 ```text
-usage: retry [-h] --command COMMAND [--retries RETRIES] [--show-first] [--success-code SUCCESS_CODE]
+usage: retry [-h] --command COMMAND [--retries RETRIES] [--show-first]
+             [--success-code SUCCESS_CODE]
 
 Run shell command with automatic retries on failure.
 
@@ -76,3 +77,7 @@ Push commit:
     git push origin main v0.1.0
 
 Which will trigger [GitHub Release workflow](.github/workflows/release.yml).
+
+# Alternatives
+
+Some how when googling before creating this I missed the following: https://github.com/dbohdan/recur , it looks good! I can't think of a reason someone would use this rather than recur, so unless you particularly want to use a tool written in python recur seems worth a look.
